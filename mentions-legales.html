@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Mentions légales et Conditions Générales de Vente — SARL Taxis de l'Est, Saint-André, La Réunion."/>
+  <title>Mentions Légales & CGV — Taxis de l'Est</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #C9A84C; --gold-l: #E2C57A; --black: #07070B;
+      --dark: #0E0E16; --dark2: #141420; --white: #F5F0E8; --muted: #80809A;
+      --fd: 'Cormorant Garamond', Georgia, serif;
+      --fb: 'Outfit', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--fb); font-weight: 300; line-height: 1.8; }
+    ::-webkit-scrollbar { width: 3px; } ::-webkit-scrollbar-thumb { background: var(--gold); }
+
+    /* NAV */
+    nav {
+      background: rgba(7,7,11,.97); border-bottom: 1px solid rgba(201,168,76,.14);
+      padding: 1.2rem 5%; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { text-decoration: none; font-family: var(--fd); font-size: 1.3rem; font-weight: 600; color: var(--white); }
+    .logo span { color: var(--gold); }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .78rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none; transition: color .3s;
+    }
+    .back-btn:hover { color: var(--gold-l); }
+
+    /* HERO */
+    .page-hero {
+      background: linear-gradient(to bottom, var(--dark) 0%, var(--black) 100%);
+      border-bottom: 1px solid rgba(201,168,76,.1);
+      padding: 5rem 5% 4rem;
+    }
+    .page-hero-label { font-size: .7rem; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: .8rem; }
+    .page-hero-label::before { content:''; display:block; width:28px; height:1px; background:var(--gold); }
+    .page-hero h1 { font-family: var(--fd); font-size: clamp(2.2rem,5vw,4rem); font-weight: 300; line-height: 1.1; }
+    .page-hero h1 em { font-style: italic; color: var(--gold); }
+    .page-hero-date { font-size: .8rem; color: var(--muted); margin-top: 1rem; }
+
+    /* NAV INTERNE */
+    .toc {
+      background: var(--dark2); border: 1px solid rgba(201,168,76,.12);
+      border-radius: 2px; padding: 2rem; margin: 3rem 5%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: .6rem;
+    }
+    .toc-title { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; grid-column: span 2; }
+    .toc a { font-size: .85rem; color: var(--muted); text-decoration: none; transition: color .3s; display: flex; align-items: center; gap: .5rem; }
+    .toc a::before { content: '→'; color: var(--gold); font-size: .75rem; }
+    .toc a:hover { color: var(--gold); }
+
+    /* CONTENT */
+    .content { padding: 0 5% 6rem; max-width: 900px; }
+    .section-block { margin-bottom: 4rem; padding-top: 1rem; }
+    .section-block:not(:last-child) { border-bottom: 1px solid rgba(201,168,76,.08); padding-bottom: 4rem; }
+    .section-num { font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; }
+    .section-block h2 { font-family: var(--fd); font-size: 1.9rem; font-weight: 300; margin-bottom: 1.5rem; }
+    .section-block h2 em { font-style: italic; color: var(--gold); }
+    .section-block h3 { font-family: var(--fd); font-size: 1.3rem; font-weight: 400; color: var(--gold-l); margin: 1.8rem 0 .8rem; }
+    .section-block p { font-size: .95rem; color: rgba(245,240,232,.72); margin-bottom: 1rem; line-height: 1.9; }
+    .section-block ul { list-style: none; margin: 1rem 0 1.5rem; display: flex; flex-direction: column; gap: .6rem; }
+    .section-block ul li { font-size: .92rem; color: rgba(245,240,232,.7); display: flex; align-items: flex-start; gap: .7rem; line-height: 1.7; }
+    .section-block ul li::before { content: '✦'; color: var(--gold); font-size: .7rem; flex-shrink: 0; margin-top: .3rem; }
+    .info-box {
+      background: rgba(201,168,76,.06); border: 1px solid rgba(201,168,76,.2);
+      border-radius: 2px; padding: 1.5rem 2rem; margin: 1.5rem 0;
+    }
+    .info-box p { color: rgba(245,240,232,.8); margin: 0; }
+    .info-box strong { color: var(--gold); }
+    table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: .88rem; }
+    th { background: rgba(201,168,76,.1); color: var(--gold); padding: .8rem 1rem; text-align: left; font-weight: 500; letter-spacing: .08em; font-size: .75rem; text-transform: uppercase; }
+    td { padding: .8rem 1rem; color: rgba(245,240,232,.7); border-bottom: 1px solid rgba(201,168,76,.08); }
+    tr:last-child td { border-bottom: none; }
+
+    /* SEPARATOR */
+    .sep { border: none; border-top: 2px solid var(--gold); opacity: .3; margin: 4rem 5%; }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark2); border-top: 1px solid rgba(201,168,76,.12);
+      padding: 3rem 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    footer p { font-size: .78rem; color: var(--muted); }
+    footer span { color: var(--gold); }
+    footer a { color: var(--gold); text-decoration: none; font-size: .78rem; }
+
+    @media(max-width:768px) {
+      .toc { grid-template-columns: 1fr; }
+      .toc-title { grid-column: span 1; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Taxis de <span>l'Est</span></a>
+  <a href="/" class="back-btn">← Retour au site</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <p class="page-hero-label">Informations légales</p>
+  <h1>Mentions Légales<br>&amp; <em>Conditions Générales</em></h1>
+  <p class="page-hero-date">Dernière mise à jour : mai 2025</p>
+</div>
+
+<!-- TABLE DES MATIÈRES -->
+<div class="toc">
+  <div class="toc-title">Sommaire</div>
+  <a href="#mentions">Mentions légales</a>
+  <a href="#hebergement">Hébergement</a>
+  <a href="#objet">Objet des CGV</a>
+  <a href="#prestations">Prestations proposées</a>
+  <a href="#reservation">Réservation</a>
+  <a href="#tarifs">Tarifs & paiement</a>
+  <a href="#annulation">Annulation</a>
+  <a href="#responsabilite">Responsabilité</a>
+  <a href="#rgpd">Données personnelles</a>
+  <a href="#litiges">Litiges</a>
+</div>
+
+<!-- CONTENU -->
+<div class="content">
+
+  <!-- MENTIONS LÉGALES -->
+  <div class="section-block" id="mentions">
+    <p class="section-num">01 — Mentions légales</p>
+    <h2>Identification de <em>l'éditeur</em></h2>
+    <div class="info-box">
+      <p><strong>Raison sociale :</strong> SARL TAXIS DE L'EST</p>
+      <p><strong>Forme juridique :</strong> Société à Responsabilité Limitée (SARL)</p>
+      <p><strong>Capital social :</strong> 15 245,00 €</p>
+      <p><strong>RCS :</strong> 448 608 364 R.C.S. Saint-Denis de La Réunion</p>
+      <p><strong>SIRET :</strong> 448 608 364 00023</p>
+      <p><strong>N° EUID :</strong> FR9741.448608364</p>
+      <p><strong>Adresse du siège social :</strong> 127 Ruelle Esparon, Champ Borne, 97440 Saint-André, La Réunion</p>
+      <p><strong>Gérant :</strong> M. Antony DUCHEMANN</p>
+      <p><strong>Téléphone :</strong> 0262 580 608 / 0692 871 251</p>
+      <p><strong>Email :</strong> contact@taxisdelest.re</p>
+      <p><strong>Site internet :</strong> https://taxisdelest.re</p>
+    </div>
+
+    <h3>Activité réglementée</h3>
+    <p>La SARL Taxis de l'Est est titulaire des licences de taxi et autorisations VTC nécessaires à l'exercice de son activité, délivrées conformément à la réglementation en vigueur. L'activité est soumise au contrôle des autorités compétentes de La Réunion.</p>
+  </div>
+
+  <!-- HÉBERGEMENT -->
+  <div class="section-block" id="hebergement">
+    <p class="section-num">02 — Hébergement</p>
+    <h2>Hébergeur du <em>site</em></h2>
+    <div class="info-box">
+      <p><strong>Société :</strong> Netlify, Inc.</p>
+      <p><strong>Adresse :</strong> 44 Montgomery Street, Suite 300, San Francisco, CA 94104, États-Unis</p>
+      <p><strong>Site :</strong> https://www.netlify.com</p>
+    </div>
+  </div>
+
+  <hr class="sep">
+
+  <!-- OBJET CGV -->
+  <div class="section-block" id="objet">
+    <p class="section-num">03 — CGV</p>
+    <h2>Objet des <em>Conditions Générales</em></h2>
+    <p>Les présentes Conditions Générales de Vente (CGV) régissent les relations contractuelles entre la SARL Taxis de l'Est, ci-après désignée « le Prestataire », et toute personne physique ou morale souhaitant recourir à ses services de transport, ci-après désignée « le Client ».</p>
+    <p>Toute réservation implique l'acceptation pleine et entière des présentes CGV. Le Prestataire se réserve le droit de modifier ses CGV à tout moment. Les CGV applicables sont celles en vigueur au moment de la réservation.</p>
+  </div>
+
+  <!-- PRESTATIONS -->
+  <div class="section-block" id="prestations">
+    <p class="section-num">04 — Prestations</p>
+    <h2>Prestations <em>proposées</em></h2>
+    <p>La SARL Taxis de l'Est propose les services de transport suivants dans l'Est et le Nord de La Réunion et vers toute destination sur l'île :</p>
+    <ul>
+      <li>Transfert vers et depuis l'aéroport Roland Garros</li>
+      <li>Transport médical conventionné Sécurité Sociale (PassTransport inclus)</li>
+      <li>Excursions touristiques — plages, rivières, cascades, Piton de la Fournaise, cirques</li>
+      <li>Chauffeur privé et mise à disposition de véhicule avec chauffeur</li>
+      <li>Transport longue distance vers toute destination de l'île</li>
+      <li>Service VTC (Voiture de Tourisme avec Chauffeur)</li>
+    </ul>
+    <p>Les véhicules mis à disposition sont des véhicules agréés, climatisés, régulièrement entretenus et conformes à la réglementation en vigueur.</p>
+  </div>
+
+  <!-- RÉSERVATION -->
+  <div class="section-block" id="reservation">
+    <p class="section-num">05 — Réservation</p>
+    <h2>Modalités de <em>réservation</em></h2>
+
+    <h3>Canaux de réservation</h3>
+    <ul>
+      <li>En ligne via le formulaire disponible sur taxisdelest.re</li>
+      <li>Par téléphone au 0262 580 608 ou 0692 871 251 (24h/24, 7j/7)</li>
+      <li>Par email à contact@taxisdelest.re</li>
+      <li>Via WhatsApp au 0692 871 251</li>
+    </ul>
+
+    <h3>Confirmation</h3>
+    <p>Toute réservation fait l'objet d'une confirmation par SMS dans un délai d'une heure maximum. Les réservations par email sont confirmées sous 24 heures. La réservation n'est définitive qu'à réception de cette confirmation.</p>
+    <p>Le Client s'engage à fournir des informations exactes lors de la réservation : adresse de prise en charge, code postal, ville, destination, date et heure souhaitées, nombre de passagers.</p>
+
+    <h3>Délai de réservation</h3>
+    <p>Les réservations peuvent être effectuées jusqu'à 30 jours à l'avance. Pour les transferts aéroport, il est recommandé de réserver au minimum 24h à l'avance.</p>
+  </div>
+
+  <!-- TARIFS -->
+  <div class="section-block" id="tarifs">
+    <p class="section-num">06 — Tarifs & paiement</p>
+    <h2>Tarifs &amp; <em>paiement</em></h2>
+
+    <h3>Tarification</h3>
+    <p>Les tarifs appliqués sont conformes à la réglementation préfectorale en vigueur à La Réunion pour les courses de taxi. Les tarifs VTC sont communiqués lors de la réservation. Aucun frais supplémentaire ne sera facturé sans accord préalable du Client.</p>
+
+    <h3>Modes de paiement acceptés</h3>
+    <ul>
+      <li>Espèces (paiement à bord)</li>
+      <li>Carte bancaire (paiement à bord)</li>
+      <li>Virement bancaire (sur devis)</li>
+      <li>Tiers payant Sécurité Sociale pour les transports médicaux conventionnés</li>
+    </ul>
+
+    <div class="info-box">
+      <p><strong>Important :</strong> Aucun paiement en ligne n'est requis lors de la réservation. Le règlement s'effectue exclusivement à bord du véhicule, à l'issue de la course.</p>
+    </div>
+  </div>
+
+  <!-- ANNULATION -->
+  <div class="section-block" id="annulation">
+    <p class="section-num">07 — Annulation</p>
+    <h2>Politique <em>d'annulation</em></h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Délai d'annulation</th>
+          <th>Conditions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Plus de 24h avant la course</td>
+          <td>Annulation gratuite, sans frais</td>
+        </tr>
+        <tr>
+          <td>Entre 2h et 24h avant</td>
+          <td>Annulation gratuite si prévenu par téléphone</td>
+        </tr>
+        <tr>
+          <td>Moins de 2h avant</td>
+          <td>Des frais de déplacement peuvent être facturés</td>
+        </tr>
+        <tr>
+          <td>Non-présentation (no-show)</td>
+          <td>Frais de déplacement facturés</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Toute annulation doit être communiquée par téléphone au 0262 580 608 ou 0692 871 251, ou par email à contact@taxisdelest.re.</p>
+  </div>
+
+  <!-- RESPONSABILITÉ -->
+  <div class="section-block" id="responsabilite">
+    <p class="section-num">08 — Responsabilité</p>
+    <h2>Responsabilité &amp; <em>assurance</em></h2>
+
+    <h3>Obligations du Prestataire</h3>
+    <p>La SARL Taxis de l'Est s'engage à fournir un service de transport sûr, ponctuel et professionnel. Ses véhicules sont assurés pour le transport de personnes conformément à la législation en vigueur.</p>
+
+    <h3>Limitations de responsabilité</h3>
+    <p>Le Prestataire ne peut être tenu responsable des retards occasionnés par des circonstances indépendantes de sa volonté : conditions météorologiques exceptionnelles, accidents de la route, embouteillages, grèves ou tout autre événement de force majeure.</p>
+    <p>Le Client est responsable de ses effets personnels transportés à bord du véhicule. La SARL Taxis de l'Est décline toute responsabilité en cas de perte ou d'oubli d'objets dans le véhicule. Tout objet trouvé sera conservé pendant 30 jours et pourra être réclamé auprès du Prestataire.</p>
+
+    <h3>Comportement à bord</h3>
+    <p>Le Prestataire se réserve le droit de refuser ou d'interrompre une course en cas de comportement dangereux, irrespectueux ou mettant en péril la sécurité des occupants du véhicule.</p>
+  </div>
+
+  <!-- RGPD -->
+  <div class="section-block" id="rgpd">
+    <p class="section-num">09 — Données personnelles</p>
+    <h2>Protection des <em>données personnelles</em></h2>
+
+    <h3>Collecte des données</h3>
+    <p>Dans le cadre de vos réservations, la SARL Taxis de l'Est collecte les données personnelles suivantes : nom, prénom, numéro de téléphone, adresse de prise en charge et destination. Ces données sont strictement nécessaires à l'exécution de la prestation.</p>
+
+    <h3>Utilisation des données</h3>
+    <ul>
+      <li>Confirmation et suivi de votre réservation</li>
+      <li>Contact en cas de modification ou d'imprévu</li>
+      <li>Facturation et archivage comptable</li>
+    </ul>
+
+    <h3>Vos droits (RGPD)</h3>
+    <p>Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, de suppression et de portabilité de vos données. Pour exercer ces droits, contactez-nous à : <strong style="color:var(--gold)">contact@taxisdelest.re</strong></p>
+
+    <h3>Cookies</h3>
+    <p>Le site taxisdelest.re n'utilise pas de cookies publicitaires ou de traçage. Des cookies techniques essentiels au bon fonctionnement du site peuvent être utilisés.</p>
+  </div>
+
+  <!-- LITIGES -->
+  <div class="section-block" id="litiges">
+    <p class="section-num">10 — Litiges</p>
+    <h2>Médiation &amp; <em>litiges</em></h2>
+
+    <p>En cas de litige, le Client est invité à contacter en premier lieu le service client de la SARL Taxis de l'Est par email à contact@taxisdelest.re ou par téléphone au 0262 580 608.</p>
+    <p>En cas d'échec de la résolution amiable, le Client peut recourir à un médiateur de la consommation conformément aux articles L.616-1 et R.616-1 du Code de la Consommation.</p>
+    <p>À défaut de résolution amiable, tout litige relatif à l'interprétation ou à l'exécution des présentes CGV sera soumis à la compétence exclusive des tribunaux du ressort de Saint-Denis de La Réunion.</p>
+
+    <div class="info-box">
+      <p><strong>Droit applicable :</strong> Les présentes CGV sont soumises au droit français. Elles sont rédigées en langue française.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>SARL Taxis de l'Est</span> — SIRET : <span>448 608 364 00023</span></p>
+  <a href="/">← Retour au site</a>
+</footer>
+
+</body>
+</html>

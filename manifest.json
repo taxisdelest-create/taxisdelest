@@ -1,0 +1,38 @@
+{
+  "name": "Taxis de l'Est — La Réunion",
+  "short_name": "Taxis de l'Est",
+  "description": "Réservez votre taxi à La Réunion — Est & Nord, toute destination. 24h/24, 7j/7.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#07070B",
+  "theme_color": "#C9A84C",
+  "lang": "fr",
+  "categories": ["travel", "transportation"],
+  "icons": [
+    { "src": "/icon-72x72.png",   "sizes": "72x72",   "type": "image/png" },
+    { "src": "/icon-96x96.png",   "sizes": "96x96",   "type": "image/png" },
+    { "src": "/icon-128x128.png", "sizes": "128x128", "type": "image/png" },
+    { "src": "/icon-144x144.png", "sizes": "144x144", "type": "image/png" },
+    { "src": "/icon-152x152.png", "sizes": "152x152", "type": "image/png" },
+    { "src": "/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-384x384.png", "sizes": "384x384", "type": "image/png" },
+    { "src": "/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Réserver un taxi",
+      "short_name": "Réserver",
+      "description": "Accéder directement au formulaire de réservation",
+      "url": "/#reservation",
+      "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Appeler",
+      "short_name": "Appeler",
+      "description": "Appeler directement Taxis de l'Est",
+      "url": "tel:+262262580608",
+      "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
+    }
+  ]
+}
