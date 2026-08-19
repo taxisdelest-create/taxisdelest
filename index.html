@@ -1846,6 +1846,7 @@ window.submitForm = async function() {
     });
     
     if (response.ok) {
+      try { if (typeof gtag === 'function') gtag('event', 'conversion', {'send_to': 'AW-18392529746/OXmVCNm52eMcENL2nsJE'}); } catch(e){}
       var wrap = document.getElementById('fWrap');
       var success = document.getElementById('fSuccess');
       if (wrap) { wrap.style.opacity = '0'; wrap.style.transform = 'translateY(-10px)'; wrap.style.transition = 'all .4s'; }
@@ -1932,6 +1933,434 @@ PLACEHOLDER_TRANSLATIONS
 PLACEHOLDER_TRANSLATIONS
 
 
+</script>
+
+
+<!-- ============ MODERNISATION UI : profondeur, relief 3D, animations ============ -->
+<style id="ux-modern">
+:root{
+  --el-1:0 1px 2px rgba(10,61,98,.06), 0 2px 8px rgba(10,61,98,.05);
+  --el-2:0 2px 4px rgba(10,61,98,.06), 0 8px 24px rgba(10,61,98,.08);
+  --el-3:0 4px 8px rgba(10,61,98,.07), 0 18px 48px rgba(10,61,98,.14);
+}
+
+/* ---- 1. Apparition au défilement ---- */
+[data-rv]{opacity:0;transform:translateY(26px);will-change:opacity,transform}
+[data-rv="l"]{transform:translateX(-28px)}
+[data-rv="r"]{transform:translateX(28px)}
+[data-rv="s"]{transform:translateY(18px) scale(.965)}
+[data-rv].rv-in{opacity:1;transform:none;
+  transition:opacity .75s cubic-bezier(.22,.75,.3,1), transform .75s cubic-bezier(.22,.75,.3,1);
+  transition-delay:var(--rvd,0ms)}
+
+/* ---- 2. Relief : cartes en 3D ---- */
+.tilt-wrap{perspective:1100px}
+.tilt{transform-style:preserve-3d;transition:transform .5s cubic-bezier(.22,.75,.3,1), box-shadow .5s ease;will-change:transform}
+.tilt.is-tilting{transition:transform .12s linear, box-shadow .4s ease}
+.svc-card,.cc,.avis-card{box-shadow:var(--el-1)}
+.svc-card:hover,.cc:hover,.avis-card:hover{box-shadow:var(--el-3)}
+.g-card{box-shadow:var(--el-2);transition:box-shadow .5s ease}
+.g-card:hover{box-shadow:var(--el-3)}
+
+/* reflet qui suit le curseur */
+.tilt{position:relative}
+.tilt::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+  background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%), rgba(255,255,255,.55), transparent 45%);
+  transition:opacity .45s ease;mix-blend-mode:soft-light;z-index:3}
+.tilt:hover::after{opacity:1}
+.svc-card,.cc,.avis-card,.g-card{transform:translateZ(0)}
+
+/* profondeur interne des cartes services */
+.svc-icon{transition:transform .5s cubic-bezier(.22,.75,.3,1)}
+.svc-card:hover .svc-icon{transform:translateZ(38px) scale(1.06)}
+.svc-name{transition:transform .5s cubic-bezier(.22,.75,.3,1)}
+.svc-card:hover .svc-name{transform:translateZ(22px)}
+.cc-ico{transition:transform .5s cubic-bezier(.22,.75,.3,1)}
+.cc:hover .cc-ico{transform:translateZ(30px) scale(1.08)}
+
+/* ---- 3. Boutons magnétiques + relief ---- */
+.btn-gold,.btn-outline,.form-btn,.avis-cta-btn,.nav-cta{will-change:transform}
+.btn-gold{box-shadow:0 4px 14px rgba(201,168,76,.28), inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-gold:hover{box-shadow:0 14px 34px rgba(201,168,76,.42), inset 0 1px 0 rgba(255,255,255,.5)}
+.form-btn{box-shadow:0 4px 14px rgba(10,61,98,.22), inset 0 1px 0 rgba(255,255,255,.18)}
+.btn-gold::before,.form-btn::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.42) 50%,transparent 65%);
+  transform:translateX(-120%);transition:transform .85s cubic-bezier(.22,.75,.3,1)}
+.btn-gold,.form-btn{position:relative;overflow:hidden}
+.btn-gold:hover::before,.form-btn:hover::before{transform:translateX(120%)}
+
+/* ---- 4. Titres : léger dégradé de profondeur ---- */
+.sec-title{text-shadow:0 1px 0 rgba(255,255,255,.6)}
+
+/* ---- 5. Barre de progression de lecture ---- */
+#ux-progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:9999;
+  background:linear-gradient(90deg,var(--teal),var(--gold));box-shadow:0 0 12px rgba(201,168,76,.6);
+  transition:width .12s linear}
+
+/* ---- 6. Accessibilité : on coupe tout si l'utilisateur le demande ---- */
+@media (prefers-reduced-motion:reduce){
+  [data-rv]{opacity:1!important;transform:none!important}
+  .tilt{transform:none!important}
+  .btn-gold::before,.form-btn::before{display:none}
+  #ux-progress{display:none}
+}
+</style>
+
+<script id="ux-modern-js">
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine   = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  function ready(fn){
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  ready(function(){
+
+    /* ---------- barre de progression ---------- */
+    if (!reduce){
+      var bar = document.createElement('div');
+      bar.id = 'ux-progress';
+      document.body.appendChild(bar);
+      var raf = false;
+      window.addEventListener('scroll', function(){
+        if (raf) return; raf = true;
+        requestAnimationFrame(function(){
+          var h = document.documentElement.scrollHeight - window.innerHeight;
+          bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+          raf = false;
+        });
+      }, {passive:true});
+    }
+
+    /* ---------- 1. apparitions au défilement ---------- */
+    var groups = [
+      ['.eyebrow', 'l', 0],
+      ['.sec-title', 'u', 60],
+      ['.sec-sub', 'u', 120],
+      ['.svc-card', 's', 90],
+      ['.g-card', 's', 70],
+      ['.avis-card', 's', 90],
+      ['.cc', 's', 80],
+      ['.about-stat', 'u', 90],
+      ['.about-feat', 'u', 45],
+      ['.resa-feat', 'l', 45],
+      ['.resa-tel', 'u', 0],
+      ['#fWrap', 'r', 0],
+      ['.f-col-title', 'u', 60],
+      ['.avis-google-badge', 'u', 0],
+      ['.avis-cta-btn', 'u', 0]
+    ];
+
+    var inHero = function(el){ return !!el.closest('#accueil, .hero-content, nav, header, #install-modal, #pwa-banner, #ios-banner'); };
+
+    groups.forEach(function(g){
+      var sel = g[0], dir = g[1], step = g[2];
+      var seen = {};
+      document.querySelectorAll(sel).forEach(function(el){
+        if (inHero(el)) return;
+        el.setAttribute('data-rv', dir === 'u' ? '' : dir);
+        // délai en cascade par conteneur parent
+        var p = el.parentElement;
+        var key = sel + '::' + (p ? (p.className || p.tagName) : '');
+        seen[key] = (seen[key] || 0);
+        el.style.setProperty('--rvd', (seen[key] * step) + 'ms');
+        seen[key]++;
+      });
+    });
+
+    var rvNodes = document.querySelectorAll('[data-rv]');
+    if (reduce || !('IntersectionObserver' in window)){
+      rvNodes.forEach(function(n){ n.classList.add('rv-in'); });
+    } else {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting){ e.target.classList.add('rv-in'); io.unobserve(e.target); }
+        });
+      }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+      rvNodes.forEach(function(n){ io.observe(n); });
+      // filet de sécurité : tout révéler après 6 s
+      setTimeout(function(){ rvNodes.forEach(function(n){ n.classList.add('rv-in'); }); }, 6000);
+    }
+
+    /* ---------- 2. relief 3D au survol ---------- */
+    if (fine && !reduce){
+      var tiltSel = '.svc-card, .cc, .avis-card, .g-card';
+      document.querySelectorAll(tiltSel).forEach(function(card){
+        if (!card.parentElement.classList.contains('tilt-wrap')){
+          card.classList.add('tilt');
+          var p = card.parentElement;
+          if (p) p.classList.add('tilt-wrap');
+        }
+        var max = card.classList.contains('g-card') ? 5 : 8;
+        card.addEventListener('mousemove', function(ev){
+          var r = card.getBoundingClientRect();
+          var px = (ev.clientX - r.left) / r.width;
+          var py = (ev.clientY - r.top) / r.height;
+          card.classList.add('is-tilting');
+          card.style.setProperty('--gx', (px*100)+'%');
+          card.style.setProperty('--gy', (py*100)+'%');
+          card.style.transform =
+            'perspective(1100px) rotateX(' + ((0.5-py)*max).toFixed(2) + 'deg)' +
+            ' rotateY(' + ((px-0.5)*max).toFixed(2) + 'deg)' +
+            ' translateY(-6px) scale(1.012)';
+        });
+        card.addEventListener('mouseleave', function(){
+          card.classList.remove('is-tilting');
+          card.style.transform = '';
+        });
+      });
+    }
+
+    /* ---------- 3. boutons magnétiques ---------- */
+    if (fine && !reduce){
+      document.querySelectorAll('.btn-gold, .btn-outline, .avis-cta-btn, .form-btn').forEach(function(b){
+        b.addEventListener('mousemove', function(ev){
+          var r = b.getBoundingClientRect();
+          var dx = (ev.clientX - (r.left + r.width/2)) / (r.width/2);
+          var dy = (ev.clientY - (r.top + r.height/2)) / (r.height/2);
+          b.style.transform = 'translate(' + (dx*5).toFixed(1) + 'px,' + (dy*4 - 2).toFixed(1) + 'px)';
+        });
+        b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
+      });
+    }
+
+    /* ---------- 4. compteurs animés ---------- */
+    function animateNum(el){
+      var raw = (el.textContent || '').trim();
+      var m = raw.match(/^(\D*)(\d+)(.*)$/);
+      if (!m) return;
+      var pre = m[1], target = parseInt(m[2], 10), post = m[3];
+      if (!isFinite(target) || target === 0) return;
+      var dur = 1400, t0 = null;
+      function step(ts){
+        if (!t0) t0 = ts;
+        var p = Math.min((ts - t0) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = pre + Math.round(target * eased) + post;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      el.textContent = pre + '0' + post;
+      requestAnimationFrame(step);
+    }
+
+    var nums = document.querySelectorAll('.stat-n, .about-stat-n');
+    if (!reduce && 'IntersectionObserver' in window){
+      var io2 = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting){ animateNum(e.target); io2.unobserve(e.target); }
+        });
+      }, {threshold:0.6});
+      nums.forEach(function(n){ io2.observe(n); });
+    }
+
+  });
+})();
+</script>
+
+
+<!-- ============ BANDEAU HAUT + INTERACTIVITÉ ============ -->
+<style id="ux-nav">
+/* ---------- Bandeau : verre dépoli, se compacte au défilement ---------- */
+nav{
+  background:rgba(255,255,255,.72)!important;
+  backdrop-filter:blur(18px) saturate(180%)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(180%)!important;
+  border-bottom:1px solid rgba(226,232,240,.7)!important;
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 6px 28px rgba(10,61,98,.06)!important;
+  transition:padding .45s cubic-bezier(.22,.75,.3,1), background .45s ease, box-shadow .45s ease!important;
+}
+/* liseré dégradé sous le bandeau */
+nav::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;
+  background:linear-gradient(90deg,var(--ocean),var(--teal) 35%,var(--gold) 70%,var(--ocean));
+  background-size:220% 100%;opacity:.85;animation:navSheen 9s linear infinite}
+@keyframes navSheen{0%{background-position:0% 0}100%{background-position:220% 0}}
+
+/* état compact */
+nav.nav-shrunk{padding-top:.55rem!important;padding-bottom:.55rem!important;
+  background:rgba(255,255,255,.9)!important;
+  box-shadow:0 8px 32px rgba(10,61,98,.12)!important}
+nav.nav-shrunk .logo-sub{opacity:0;max-height:0;margin-top:0;overflow:hidden;transition:all .4s}
+nav.nav-shrunk .logo-name{font-size:1.12rem}
+.logo-sub{transition:all .4s}
+.logo-name{transition:font-size .4s}
+.logo-wrap{transition:transform .45s cubic-bezier(.22,.75,.3,1)}
+.logo-wrap:hover{transform:translateY(-1px)}
+.logo-tap{transition:transform .6s cubic-bezier(.22,.75,.3,1)}
+.logo-wrap:hover .logo-tap{transform:rotate(-8deg) scale(1.1)}
+
+/* ---------- Liens : soulignement dégradé + section active ---------- */
+.nav-links a::after{background:linear-gradient(90deg,var(--ocean),var(--teal))!important;height:2px!important}
+.nav-links a.nav-active{color:var(--ocean)!important}
+.nav-links a.nav-active::after{transform:scaleX(1)!important}
+.nav-links a:not(.nav-cta){padding:.35rem .1rem;border-radius:4px}
+
+/* ---------- Bouton Appeler : relief + halo ---------- */
+.nav-cta{
+  position:relative;overflow:hidden;
+  box-shadow:0 4px 14px rgba(10,61,98,.28), inset 0 1px 0 rgba(255,255,255,.25);
+  transition:transform .3s cubic-bezier(.22,.75,.3,1), box-shadow .3s ease, background .3s ease!important}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(10,61,98,.38), inset 0 1px 0 rgba(255,255,255,.35)}
+.nav-cta::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.45) 50%,transparent 65%);
+  transform:translateX(-130%);transition:transform .8s cubic-bezier(.22,.75,.3,1)}
+.nav-cta:hover::before{transform:translateX(130%)}
+
+/* pastille « disponible » qui pulse */
+.nav-cta .live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#4ADE80;margin-right:.45rem;
+  box-shadow:0 0 0 0 rgba(74,222,128,.7);animation:livePulse 2.2s infinite}
+@keyframes livePulse{
+  0%{box-shadow:0 0 0 0 rgba(74,222,128,.65)}
+  70%{box-shadow:0 0 0 9px rgba(74,222,128,0)}
+  100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}
+}
+
+/* ---------- Sélecteur de langue ---------- */
+.lang-btn{transition:all .3s cubic-bezier(.22,.75,.3,1)}
+.lang-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(10,61,98,.12)}
+
+/* ---------- Burger animé ---------- */
+.burger span{transition:transform .4s cubic-bezier(.22,.75,.3,1), opacity .3s}
+.burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.is-open span:nth-child(2){opacity:0;transform:scaleX(.2)}
+.burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ---------- Menu mobile : entrée en cascade ---------- */
+.mobile-menu a{opacity:0;transform:translateY(18px)}
+.mobile-menu.open a{opacity:1;transform:none;
+  transition:opacity .5s cubic-bezier(.22,.75,.3,1) var(--mmd,0ms), transform .5s cubic-bezier(.22,.75,.3,1) var(--mmd,0ms)}
+
+/* ---------- Bouton retour en haut ---------- */
+#ux-top{position:fixed;right:22px;bottom:96px;width:46px;height:46px;border-radius:50%;
+  border:none;cursor:pointer;z-index:190;display:grid;place-items:center;
+  background:rgba(255,255,255,.86);backdrop-filter:blur(10px);color:var(--ocean);
+  box-shadow:0 6px 22px rgba(10,61,98,.18);opacity:0;pointer-events:none;
+  transform:translateY(12px) scale(.9);transition:all .45s cubic-bezier(.22,.75,.3,1);font-size:19px;line-height:1}
+#ux-top.show{opacity:1;pointer-events:auto;transform:none}
+#ux-top:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(10,61,98,.28);color:var(--gold-d)}
+
+@media (max-width:900px){ #ux-top{bottom:150px;right:16px} }
+
+@media (prefers-reduced-motion:reduce){
+  nav::after{animation:none}
+  .nav-cta .live-dot{animation:none}
+  #ux-top{display:none}
+  .mobile-menu a{opacity:1;transform:none}
+}
+</style>
+
+<script id="ux-nav-js">
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function ready(fn){
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  ready(function(){
+    var nav = document.querySelector('nav');
+
+    /* 1. bandeau compact au défilement */
+    if (nav){
+      var tick = false;
+      function onScroll(){
+        if (tick) return; tick = true;
+        requestAnimationFrame(function(){
+          nav.classList.toggle('nav-shrunk', window.scrollY > 60);
+          tick = false;
+        });
+      }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+    }
+
+    /* 2. pastille "disponible 24h/24" sur le bouton Appeler */
+    document.querySelectorAll('.nav-cta').forEach(function(b){
+      if (b.querySelector('.live-dot')) return;
+      var d = document.createElement('span');
+      d.className = 'live-dot';
+      b.insertBefore(d, b.firstChild);
+    });
+
+    /* 3. surlignage de la section courante */
+    var ids = ['accueil','destinations','quisommesnous','services','reservation','avis','contact'];
+    var links = {};
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(function(a){
+      links[a.getAttribute('href').slice(1)] = a;
+    });
+    var sections = ids.map(function(id){ return document.getElementById(id); }).filter(Boolean);
+    if (sections.length && 'IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          var a = links[e.target.id];
+          if (!a) return;
+          if (e.isIntersecting){
+            Object.keys(links).forEach(function(k){ links[k].classList.remove('nav-active'); });
+            a.classList.add('nav-active');
+          }
+        });
+      }, {rootMargin:'-45% 0px -50% 0px', threshold:0});
+      sections.forEach(function(s){ io.observe(s); });
+    }
+
+    /* 4. burger animé + cascade du menu mobile */
+    var burger = document.querySelector('.burger');
+    var mm = document.querySelector('.mobile-menu');
+    if (mm){
+      mm.querySelectorAll('a').forEach(function(a,i){ a.style.setProperty('--mmd', (60 + i*55) + 'ms'); });
+    }
+    if (burger && mm){
+      var sync = function(){ burger.classList.toggle('is-open', mm.classList.contains('open')); };
+      burger.addEventListener('click', function(){ setTimeout(sync, 30); });
+      var mo = new MutationObserver(sync);
+      mo.observe(mm, {attributes:true, attributeFilter:['class']});
+      var close = document.querySelector('.mobile-close');
+      if (close) close.addEventListener('click', function(){ setTimeout(sync, 30); });
+    }
+
+    /* 5. bouton retour en haut */
+    if (!reduce){
+      var top = document.createElement('button');
+      top.id = 'ux-top';
+      top.setAttribute('aria-label','Revenir en haut de la page');
+      top.innerHTML = '&#9650;';
+      top.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+      document.body.appendChild(top);
+      var t2 = false;
+      window.addEventListener('scroll', function(){
+        if (t2) return; t2 = true;
+        requestAnimationFrame(function(){
+          top.classList.toggle('show', window.scrollY > 700);
+          t2 = false;
+        });
+      }, {passive:true});
+    }
+  });
+})();
+</script>
+
+<!-- Google Ads : suivi des clics tel: et WhatsApp -->
+<script>
+(function(){
+  var fired = {};
+  function track(label, key){
+    if (fired[key]) return;
+    fired[key] = true;
+    try { if (typeof gtag === 'function') gtag('event','conversion',{'send_to': label}); } catch(e){}
+  }
+  document.addEventListener('click', function(ev){
+    var a = ev.target && ev.target.closest ? ev.target.closest('a[href]') : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (href.indexOf('tel:') === 0) {
+      track('AW-18392529746/jnKeCLm62eMcENL2nsJE', 'tel');
+    } else if (href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp') !== -1) {
+      track('AW-18392529746/b-QoCLa62eMcENL2nsJE', 'wa');
+    }
+  }, true);
+})();
 </script>
 </body>
 </html>
